@@ -1,4 +1,4 @@
-module github.com/aerostatka/proto-example
+module github.com/spencermeta/proto-example
 
 go 1.16
 
