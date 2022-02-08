@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/aerostatka/proto-example/calc/calcpb"
+	"github.com/spencermeta/proto-example/calc/calcpb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -13,7 +13,7 @@ import (
 	"net"
 )
 
-type calcServer struct {}
+type calcServer struct{}
 
 func (s *calcServer) Sum(ctx context.Context, request *calcpb.SumRequest) (*calcpb.SumResponse, error) {
 	fmt.Printf("Reseived request with parameters: %v\n", request)
@@ -44,14 +44,14 @@ func (s *calcServer) SquareRoot(ctx context.Context, request *calcpb.SquareRootR
 	}, nil
 }
 
-func (s *calcServer) PrimeNumberDecomposition (req *calcpb.PrimeNumberDecompositionRequest, stream calcpb.CalcService_PrimeNumberDecompositionServer) error {
+func (s *calcServer) PrimeNumberDecomposition(req *calcpb.PrimeNumberDecompositionRequest, stream calcpb.CalcService_PrimeNumberDecompositionServer) error {
 	fmt.Printf("PrimeNumberDecomposition function was invoked with %v\n", req)
 
 	number := req.GetNumber()
 	var divisor int64 = 2
 
 	for number > 1 {
-		if number %divisor == 0 {
+		if number%divisor == 0 {
 			response := &calcpb.PrimeNumberDecompositionResponse{
 				PrimeNumber: divisor,
 			}

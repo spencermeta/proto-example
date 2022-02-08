@@ -3,9 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/aerostatka/proto-example/greet/greetpb"
+	"github.com/spencermeta/proto-example/greet/greetpb"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 	"io"
@@ -131,17 +130,17 @@ func (s *server) GreetEveryone(stream greetpb.GreetService_GreetEveryoneServer) 
 func main() {
 	fmt.Println("Greet server invoked!")
 
-	creds, err := credentials.NewServerTLSFromFile("certs/server.crt", "certs/server.pem")
-	if err != nil {
-		log.Fatalf("Failed loading certificates: %s", err.Error())
-	}
+	/*	creds, err := credentials.NewServerTLSFromFile("certs/server.crt", "certs/server.pem")
+		if err != nil {
+			log.Fatalf("Failed loading certificates: %s", err.Error())
+		}*/
 	listener, err := net.Listen("tcp", "0.0.0.0:50051")
 
 	if err != nil {
 		log.Fatalf("Failed to listen %s", err.Error())
 	}
 
-	s := grpc.NewServer(grpc.Creds(creds))
+	s := grpc.NewServer()
 	greetpb.RegisterGreetServiceServer(s, &server{})
 
 	reflection.Register(s)

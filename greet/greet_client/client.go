@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/aerostatka/proto-example/greet/greetpb"
+	"github.com/spencermeta/proto-example/greet/greetpb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
 	"io"
 	"log"
@@ -14,12 +14,12 @@ import (
 )
 
 func main() {
-	creds, err := credentials.NewClientTLSFromFile("certs/ca.crt", "")
-	if err != nil {
-		log.Fatalf("Error while loading certificates: %v", err.Error())
-	}
+	/*	creds, err := credentials.NewClientTLSFromFile("certs/ca.crt", "")
+		if err != nil {
+			log.Fatalf("Error while loading certificates: %v", err.Error())
+		}*/
 
-	cc, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(creds))
+	cc, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Could not connect: %v", err.Error())
 	}
@@ -41,7 +41,7 @@ func doUnaryWithDeadline(c greetpb.GreetServiceClient, timeout time.Duration) {
 	request := &greetpb.GreetWithDeadlineRequest{
 		Greeting: &greetpb.Greeting{
 			FirstName: "Daria",
-			LastName: "Frolova",
+			LastName:  "Frolova",
 		},
 	}
 
@@ -80,37 +80,37 @@ func doBiDirectionalStreaming(c greetpb.GreetServiceClient) {
 		&greetpb.GreetEveryoneRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Daria",
-				LastName: "Frolova",
+				LastName:  "Frolova",
 			},
 		},
 		&greetpb.GreetEveryoneRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Aleksandr",
-				LastName: "Frolov",
+				LastName:  "Frolov",
 			},
 		},
 		&greetpb.GreetEveryoneRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Banana",
-				LastName: "Frolova",
+				LastName:  "Frolova",
 			},
 		},
 		&greetpb.GreetEveryoneRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Eldar",
-				LastName: "Gadirov",
+				LastName:  "Gadirov",
 			},
 		},
 		&greetpb.GreetEveryoneRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Marina",
-				LastName: "Gadirova",
+				LastName:  "Gadirova",
 			},
 		},
 		&greetpb.GreetEveryoneRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Nicole",
-				LastName: "Gadirova",
+				LastName:  "Gadirova",
 			},
 		},
 	}
@@ -165,19 +165,19 @@ func doStreaming(c greetpb.GreetServiceClient) {
 		&greetpb.LongGreetRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Daria",
-				LastName: "Frolova",
+				LastName:  "Frolova",
 			},
 		},
 		&greetpb.LongGreetRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Aleksandr",
-				LastName: "Frolov",
+				LastName:  "Frolov",
 			},
 		},
 		&greetpb.LongGreetRequest{
 			Greeting: &greetpb.Greeting{
 				FirstName: "Banana",
-				LastName: "Frolova",
+				LastName:  "Frolova",
 			},
 		},
 	}
@@ -203,7 +203,7 @@ func doServerStreaming(c greetpb.GreetServiceClient) {
 	request := &greetpb.GreetManyTimesRequest{
 		Greeting: &greetpb.Greeting{
 			FirstName: "Daria",
-			LastName: "Frolova",
+			LastName:  "Frolova",
 		},
 	}
 
@@ -231,7 +231,7 @@ func doUnary(c greetpb.GreetServiceClient) {
 	request := &greetpb.GreetRequest{
 		Greeting: &greetpb.Greeting{
 			FirstName: "Daria",
-			LastName: "Frolova",
+			LastName:  "Frolova",
 		},
 	}
 
